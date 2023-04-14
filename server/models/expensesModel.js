@@ -22,3 +22,5 @@ const expensesSchema = new Schema({
     type: String,
   },
 });
+
+module.exports = mongoose.model('Expenses', expensesSchema);

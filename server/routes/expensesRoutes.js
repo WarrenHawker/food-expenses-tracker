@@ -13,3 +13,5 @@ router.get('/', getAllExpenses);
 
 //post new expense
 router.post('/', createExpense);
+
+module.exports = router;

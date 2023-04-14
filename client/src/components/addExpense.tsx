@@ -1,13 +1,36 @@
 import React, { useState } from 'react';
+import { convertDate } from '../misc/functions';
 
 function AddExpense() {
   const [companyInput, setCompanyInput] = useState<string>('');
-  const [amountInput, setAmountInput] = useState<number>();
+  const [amountInput, setAmountInput] = useState<string>('');
   const [dateInput, setDateInput] = useState<Date>();
   const [notesInput, setNotesInput] = useState<string>('');
 
-  const handleFormSubmit = (e: React.FormEvent): void => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const expense = {
+      company: companyInput,
+      date: dateInput,
+      amount: parseInt(amountInput),
+      notes: notesInput,
+    };
+    console.log(expense);
+
+    const response = await fetch('http://localhost:5000/api/expenses', {
+      method: 'POST',
+      body: JSON.stringify(expense),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const json = await response.json();
+    console.log(json);
+  };
+
+  const useTodayDate = (e: React.FormEvent) => {
+    e.preventDefault();
+    setDateInput(new Date());
   };
   return (
     <section className='form-container'>
@@ -25,15 +48,16 @@ function AddExpense() {
           type='number'
           name='amount'
           value={amountInput}
-          onChange={(e) => setAmountInput(parseInt(e.target.value))}
+          onChange={(e) => setAmountInput(e.target.value)}
         />
         <label htmlFor='date'>Date</label>
         <input
           type='date'
           name='date'
-          value={dateInput?.toDateString()}
+          value={convertDate(dateInput)}
           onChange={(e) => setDateInput(new Date(e.target.value))}
         />
+        <button onClick={useTodayDate}>Use Today's Date</button>
         <label htmlFor='notes'>Notes</label>
         <textarea
           value={notesInput}
