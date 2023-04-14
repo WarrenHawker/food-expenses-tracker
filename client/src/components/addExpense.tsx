@@ -4,8 +4,10 @@ import { convertDate } from '../misc/functions';
 function AddExpense() {
   const [companyInput, setCompanyInput] = useState<string>('');
   const [amountInput, setAmountInput] = useState<string>('');
-  const [dateInput, setDateInput] = useState<Date>();
+  const [dateInput, setDateInput] = useState<Date | undefined>();
   const [notesInput, setNotesInput] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const [emptyFields, setEmptyFields] = useState<string[]>([]);
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,7 +17,6 @@ function AddExpense() {
       amount: parseInt(amountInput),
       notes: notesInput,
     };
-    console.log(expense);
 
     const response = await fetch('http://localhost:5000/api/expenses', {
       method: 'POST',
@@ -25,7 +26,18 @@ function AddExpense() {
       },
     });
     const json = await response.json();
-    console.log(json);
+
+    if (!response.ok) {
+      setError(json.error);
+      setEmptyFields(json.emptyFields);
+    }
+    if (response.ok) {
+      setAmountInput('');
+      setCompanyInput('');
+      setDateInput(undefined);
+      setError('');
+      setEmptyFields([]);
+    }
   };
 
   const useTodayDate = (e: React.FormEvent) => {
@@ -38,6 +50,7 @@ function AddExpense() {
       <form onSubmit={handleFormSubmit}>
         <label htmlFor='company'>Bought from (shop or company)</label>
         <input
+          className={emptyFields.includes('company') ? 'invalid' : ''}
           type='text'
           name='company'
           value={companyInput}
@@ -45,6 +58,7 @@ function AddExpense() {
         />
         <label htmlFor='amount'>Amount paid (£)</label>
         <input
+          className={emptyFields.includes('amount') ? 'invalid' : ''}
           type='number'
           name='amount'
           value={amountInput}
@@ -52,6 +66,7 @@ function AddExpense() {
         />
         <label htmlFor='date'>Date</label>
         <input
+          className={emptyFields.includes('date') ? 'invalid' : ''}
           type='date'
           name='date'
           value={convertDate(dateInput)}
@@ -65,6 +80,7 @@ function AddExpense() {
         />
         <button>Add expense</button>
       </form>
+      {error ? <p className='error'>{error}</p> : null}
     </section>
   );
 }
