@@ -10,3 +10,8 @@ body {
 .invalid {
   border: 2px red dashed;
 }
+
+label, input, textarea {
+  display: block;
+  margin: 0.5em;
+}

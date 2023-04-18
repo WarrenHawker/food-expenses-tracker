@@ -3,7 +3,11 @@ const Expense = require('../models/expensesModel');
 const mongoose = require('mongoose');
 
 //get all expenses
-const getAllExpenses = () => {};
+const getAllExpenses = async (req, res) => {
+  const expenses = await Expense.find({}).sort({ date: -1 });
+
+  res.status(200).json(expenses);
+};
 
 //post new expense
 const createExpense = async (req, res) => {
@@ -39,4 +43,15 @@ const createExpense = async (req, res) => {
   }
 };
 
-module.exports = { getAllExpenses, createExpense };
+//delete expense
+const deleteExpense = async (req, res) => {
+  const { _id } = req.body;
+  try {
+    const expense = await Expense.deleteOne({ _id: _id });
+    res.status(200).json(expense);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = { getAllExpenses, createExpense, deleteExpense };

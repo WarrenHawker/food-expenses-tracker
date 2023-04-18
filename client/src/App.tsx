@@ -1,5 +1,5 @@
 import AddExpense from './components/addExpense';
-import Expenses from './components/expenses';
+import ExpensesTable from './components/expensesTable';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       </header>
       <main>
         <AddExpense />
-        <Expenses />
+        <ExpensesTable />
       </main>
     </>
   );

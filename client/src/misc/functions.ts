@@ -1,4 +1,5 @@
-const convertDate = (date: Date | undefined): string => {
+//prettier-ignore
+const dateToString = (date: Date | undefined, reversed:boolean = false): string => {
   if (!date) {
     return '';
   }
@@ -14,8 +15,11 @@ const convertDate = (date: Date | undefined): string => {
     day = `0${date.getDate()}`;
   } else day = date.getDate().toString();
 
-  const newDate = `${year}-${month}-${day}`;
-  return newDate;
+  if(reversed) {
+    return `${year}-${month}-${day}`;
+  } else return `${day}-${month}-${year}`
+ 
+  
 };
 
-export { convertDate };
+export { dateToString };

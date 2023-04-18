@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { convertDate } from '../misc/functions';
+import { dateToString } from '../misc/functions';
+import { useExpenses } from '../context/expensesContext';
 
 function AddExpense() {
   const [companyInput, setCompanyInput] = useState<string>('');
@@ -9,12 +10,14 @@ function AddExpense() {
   const [error, setError] = useState<string>('');
   const [emptyFields, setEmptyFields] = useState<string[]>([]);
 
+  const { addExpense } = useExpenses();
+
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const expense = {
       company: companyInput,
       date: dateInput,
-      amount: parseInt(amountInput),
+      amount: amountInput,
       notes: notesInput,
     };
 
@@ -35,8 +38,10 @@ function AddExpense() {
       setAmountInput('');
       setCompanyInput('');
       setDateInput(undefined);
+      setNotesInput('');
       setError('');
       setEmptyFields([]);
+      addExpense(json);
     }
   };
 
@@ -69,7 +74,7 @@ function AddExpense() {
           className={emptyFields.includes('date') ? 'invalid' : ''}
           type='date'
           name='date'
-          value={convertDate(dateInput)}
+          value={dateToString(dateInput, true)}
           onChange={(e) => setDateInput(new Date(e.target.value))}
         />
         <button onClick={useTodayDate}>Use Today's Date</button>
