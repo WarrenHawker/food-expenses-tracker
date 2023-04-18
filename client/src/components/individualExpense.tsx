@@ -6,9 +6,8 @@ function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
   const { deleteExpense } = useExpenses();
 
   const deleteHandler = async () => {
-    const response = await fetch('http://localhost:5000/api/expenses', {
+    const response = await fetch(`http://localhost:5000/api/expenses/${_id}`, {
       method: 'DELETE',
-      body: JSON.stringify(_id),
     });
     if (response.ok) {
       deleteExpense(_id);

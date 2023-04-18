@@ -45,9 +45,9 @@ const createExpense = async (req, res) => {
 
 //delete expense
 const deleteExpense = async (req, res) => {
-  const { _id } = req.body;
+  const { id } = req.params;
   try {
-    const expense = await Expense.deleteOne({ _id: _id });
+    const expense = await Expense.deleteOne({ _id: id });
     res.status(200).json(expense);
   } catch (error) {
     res.status(400).json({ error: error.message });

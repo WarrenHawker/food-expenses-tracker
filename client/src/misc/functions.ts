@@ -22,4 +22,51 @@ const dateToString = (date: Date | undefined, reversed:boolean = false): string 
   
 };
 
-export { dateToString };
+const getMonthName = (month: number): string => {
+  switch (month) {
+    case 0:
+      return 'January';
+    case 1:
+      return 'February';
+    case 2:
+      return 'March';
+    case 3:
+      return 'April';
+    case 4:
+      return 'May';
+    case 5:
+      return 'June';
+    case 6:
+      return 'July';
+    case 7:
+      return 'August';
+    case 8:
+      return 'September';
+    case 9:
+      return 'October';
+    case 10:
+      return 'November';
+    case 11:
+      return 'December';
+    default:
+      return '';
+  }
+};
+
+const getWeekBeginning = (date: string = 'today') => {
+  if (date == 'today') {
+    const newDate = new Date();
+    const day = newDate.getDay();
+
+    const diff = newDate.getDate() - day + (day === 0 ? -6 : 1);
+    return new Date(newDate.setDate(diff));
+  } else {
+    const newDate = new Date(date);
+    const day = newDate.getDay();
+
+    const diff = newDate.getDate() - day + (day === 0 ? -6 : 1);
+    return new Date(newDate.setDate(diff));
+  }
+};
+
+export { dateToString, getMonthName, getWeekBeginning };

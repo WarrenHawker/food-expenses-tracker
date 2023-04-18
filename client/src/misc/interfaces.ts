@@ -11,3 +11,13 @@ export interface UseExpensesProps {
   addExpense: (data: Expense) => void;
   deleteExpense: (_id: string) => void;
 }
+export interface CurrentWeek {
+  weekBeginning: Date;
+  weekEnding: Date;
+}
+export interface DateSelectorProps {
+  currentWeek: CurrentWeek;
+  currentMonth: number;
+  prevWeek: () => void;
+  nextWeek: () => void;
+}

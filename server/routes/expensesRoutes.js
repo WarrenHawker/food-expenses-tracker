@@ -16,6 +16,6 @@ router.get('/', getAllExpenses);
 router.post('/', createExpense);
 
 //delete expense
-router.delete('/', deleteExpense);
+router.delete('/:id', deleteExpense);
 
 module.exports = router;
