@@ -1,3 +1,5 @@
+import { Expense } from './interfaces';
+
 //prettier-ignore
 const dateToString = (date: Date | undefined, reversed:boolean = false): string => {
   if (!date) {
@@ -69,4 +71,53 @@ const getWeekBeginning = (date: string = 'today') => {
   }
 };
 
-export { dateToString, getMonthName, getWeekBeginning };
+const resetTimeZero = (date: Date): Date => {
+  date.setHours(0);
+  date.setMinutes(0);
+  date.setSeconds(0);
+  date.setMilliseconds(0);
+  return date;
+};
+
+const resetTimeEnd = (date: Date): Date => {
+  date.setHours(24);
+  date.setMinutes(59);
+  date.setSeconds(59);
+  date.setMilliseconds(0);
+  return date;
+};
+
+const getWeeklyExpenses = (
+  expenses: Expense[],
+  weekBegin: Date,
+  weekEnd: Date
+): Expense[] => {
+  const newWeeklyExpenses = expenses.filter((item) => {
+    const date = new Date(item.date);
+    return (
+      date.getTime() >= weekBegin.getTime() &&
+      date.getTime() <= weekEnd.getTime()
+    );
+  });
+  return newWeeklyExpenses;
+};
+
+const getWeeklyMoneySpent = (expenses: Expense[]): number => {
+  return expenses
+    .map((item) => {
+      return parseFloat(item.amount);
+    })
+    .reduce((next, number) => {
+      return next + number;
+    }, 0);
+};
+
+export {
+  dateToString,
+  getMonthName,
+  getWeekBeginning,
+  resetTimeZero,
+  resetTimeEnd,
+  getWeeklyExpenses,
+  getWeeklyMoneySpent,
+};

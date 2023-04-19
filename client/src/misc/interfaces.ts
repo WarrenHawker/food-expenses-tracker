@@ -18,6 +18,5 @@ export interface CurrentWeek {
 export interface DateSelectorProps {
   currentWeek: CurrentWeek;
   currentMonth: number;
-  prevWeek: () => void;
-  nextWeek: () => void;
+  changeWeek: (option: string) => void;
 }

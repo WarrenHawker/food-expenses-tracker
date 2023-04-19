@@ -2,17 +2,17 @@ import { getMonthName, dateToString } from '../misc/functions';
 import { DateSelectorProps } from '../misc/interfaces';
 
 //prettier-ignore
-function DateSelector({ currentWeek, currentMonth, nextWeek, prevWeek }: DateSelectorProps) {
+function DateSelector({ currentWeek, currentMonth, changeWeek }: DateSelectorProps) {
   return (
     <>
       <h3>{getMonthName(currentMonth)}</h3>
-      <button onClick={prevWeek}>Prev</button>
+      <button onClick={() => changeWeek('prev')}>Prev</button>
       <p>
         {`${dateToString(currentWeek.weekBeginning)} - ${dateToString(
           currentWeek.weekEnding
         )}`}
       </p>
-      <button onClick={nextWeek}>Next</button>
+      <button onClick={() => changeWeek('next')}>Next</button>
     </>
   );
 }

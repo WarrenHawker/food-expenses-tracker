@@ -3,7 +3,13 @@ import { Expense, CurrentWeek } from '../misc/interfaces';
 import IndividualExpense from './individualExpense';
 import { useExpenses } from '../context/expensesContext';
 import DateSelector from './dateSelector';
-import { getWeekBeginning } from '../misc/functions';
+import {
+  getWeekBeginning,
+  resetTimeZero,
+  resetTimeEnd,
+  getWeeklyExpenses,
+  getWeeklyMoneySpent,
+} from '../misc/functions';
 
 function ExpensesTable() {
   const { expenses } = useExpenses();
@@ -19,98 +25,35 @@ function ExpensesTable() {
     let weekEnd = new Date();
     weekEnd.setDate(weekBegin.getDate() + 6);
     setCurrentMonth(newDate.getMonth());
-    setCurrentWeek({ weekBeginning: weekBegin, weekEnding: weekEnd });
-
-    const newWeeklyExpenses = expenses.filter((item) => {
-      const date = new Date(item.date);
-      return (
-        date.getDate() >= weekBegin.getDate() &&
-        date.getDate() <= weekEnd.getDate()
-      );
+    setCurrentWeek({
+      weekBeginning: resetTimeZero(weekBegin),
+      weekEnding: resetTimeEnd(weekEnd),
     });
-
+    const newWeeklyExpenses = getWeeklyExpenses(expenses, weekBegin, weekEnd);
     setCurrentWeekExpenses(newWeeklyExpenses);
-    const newMoneySpent = newWeeklyExpenses
-      .map((item) => {
-        return parseFloat(item.amount);
-      })
-      .reduce((next, number) => {
-        return next + number;
-      }, 0);
+
+    const newMoneySpent = getWeeklyMoneySpent(newWeeklyExpenses);
     setMoneySpent(newMoneySpent);
   }, [expenses]);
 
-  let expensesDisplay;
-  if (currentWeekExpenses) {
-    expensesDisplay = currentWeekExpenses.map((item: Expense) => {
-      return (
-        <IndividualExpense
-          key={item._id}
-          _id={item._id}
-          company={item.company}
-          amount={item.amount}
-          date={new Date(item.date)}
-          notes={item.notes}
-        />
-      );
-    });
-  }
-
-  const prevWeek = () => {
+  const changeWeek = (option: string): void => {
     let weekBegin = new Date(currentWeek!.weekBeginning);
     let weekEnd = new Date(currentWeek!.weekEnding);
 
-    weekBegin.setDate(weekBegin.getDate() - 7);
-    weekEnd.setDate(weekEnd.getDate() - 7);
-
+    if (option == 'next') {
+      weekBegin.setDate(weekBegin.getDate() + 7);
+      weekEnd.setDate(weekEnd.getDate() + 7);
+    } else if (option == 'prev') {
+      weekBegin.setDate(weekBegin.getDate() - 7);
+      weekEnd.setDate(weekEnd.getDate() - 7);
+    }
     setCurrentWeek({ weekBeginning: weekBegin, weekEnding: weekEnd });
     setCurrentMonth(weekBegin.getMonth());
 
-    const newWeeklyExpenses = expenses.filter((item) => {
-      const date = new Date(item.date);
-      return (
-        date.getDate() >= weekBegin.getDate() &&
-        date.getDate() <= weekEnd.getDate()
-      );
-    });
-
+    const newWeeklyExpenses = getWeeklyExpenses(expenses, weekBegin, weekEnd);
     setCurrentWeekExpenses(newWeeklyExpenses);
-    const newMoneySpent = newWeeklyExpenses
-      .map((item) => {
-        return parseFloat(item.amount);
-      })
-      .reduce((next, number) => {
-        return next + number;
-      }, 0);
-    setMoneySpent(newMoneySpent);
-  };
 
-  const nextWeek = () => {
-    let weekBegin = new Date(currentWeek!.weekBeginning);
-    let weekEnd = new Date(currentWeek!.weekEnding);
-
-    weekBegin.setDate(weekBegin.getDate() + 7);
-    weekEnd.setDate(weekEnd.getDate() + 7);
-
-    setCurrentWeek({ weekBeginning: weekBegin, weekEnding: weekEnd });
-    setCurrentMonth(weekBegin.getMonth());
-
-    const newWeeklyExpenses = expenses.filter((item) => {
-      const date = new Date(item.date);
-      return (
-        date.getDate() >= weekBegin.getDate() &&
-        date.getDate() <= weekEnd.getDate()
-      );
-    });
-
-    setCurrentWeekExpenses(newWeeklyExpenses);
-    const newMoneySpent = newWeeklyExpenses
-      .map((item) => {
-        return parseFloat(item.amount);
-      })
-      .reduce((next, number) => {
-        return next + number;
-      }, 0);
+    const newMoneySpent = getWeeklyMoneySpent(newWeeklyExpenses);
     setMoneySpent(newMoneySpent);
   };
 
@@ -121,8 +64,7 @@ function ExpensesTable() {
           <DateSelector
             currentWeek={currentWeek}
             currentMonth={currentMonth}
-            prevWeek={prevWeek}
-            nextWeek={nextWeek}
+            changeWeek={changeWeek}
           />
         ) : null}
       </section>
@@ -139,18 +81,23 @@ function ExpensesTable() {
             <th>Notes</th>
           </tr>
         </thead>
-        <tbody>{expensesDisplay}</tbody>
+        <tbody>
+          {currentWeekExpenses
+            ? currentWeekExpenses.map((item: Expense) => (
+                <IndividualExpense
+                  key={item._id}
+                  _id={item._id}
+                  company={item.company}
+                  amount={item.amount}
+                  date={new Date(item.date)}
+                  notes={item.notes}
+                />
+              ))
+            : null}
+        </tbody>
       </table>
     </>
   );
 }
 
 export default ExpensesTable;
-function acc(
-  previousValue: Expense,
-  currentValue: Expense,
-  currentIndex: number,
-  array: Expense[]
-): Expense {
-  throw new Error('Function not implemented.');
-}
