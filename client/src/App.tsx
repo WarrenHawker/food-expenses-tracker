@@ -1,7 +1,10 @@
 import AddExpense from './components/addExpense';
-import ExpensesTable from './components/expensesTable';
+import ExpensesTableWeek from './components/expensesTableWeek';
+import ExpensesTableMonth from './components/expensesTableMonth';
+import { useState } from 'react';
 
 function App() {
+  const [showWeeklyView, setShowWeeklyView] = useState(false);
   return (
     <>
       <header>
@@ -10,7 +13,10 @@ function App() {
       </header>
       <main>
         <AddExpense />
-        <ExpensesTable />
+        <button onClick={() => setShowWeeklyView((prev) => !prev)}>
+          Switch View
+        </button>
+        {showWeeklyView ? <ExpensesTableWeek /> : <ExpensesTableMonth />}
       </main>
     </>
   );

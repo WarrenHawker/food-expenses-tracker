@@ -7,32 +7,29 @@ import {
   getWeekBeginning,
   resetTimeZero,
   resetTimeEnd,
-  getWeeklyExpenses,
-  getWeeklyMoneySpent,
+  getSelectedExpenses,
+  getMoneySpent,
 } from '../misc/functions';
 
-function ExpensesTable() {
+function ExpensesTableWeek() {
   const { expenses } = useExpenses();
-  const [currentWeek, setCurrentWeek] = useState<CurrentWeek>();
-  const [currentMonth, setCurrentMonth] = useState<number>();
   const [budget, setBudget] = useState<number>(50);
   const [moneySpent, setMoneySpent] = useState<number>(0);
   const [currentWeekExpenses, setCurrentWeekExpenses] = useState<Expense[]>();
+  const [currentWeek, setCurrentWeek] = useState<CurrentWeek>();
 
   useEffect(() => {
-    const newDate = new Date();
     const weekBegin = getWeekBeginning();
     let weekEnd = new Date();
     weekEnd.setDate(weekBegin.getDate() + 6);
-    setCurrentMonth(newDate.getMonth());
     setCurrentWeek({
       weekBeginning: resetTimeZero(weekBegin),
       weekEnding: resetTimeEnd(weekEnd),
     });
-    const newWeeklyExpenses = getWeeklyExpenses(expenses, weekBegin, weekEnd);
-    setCurrentWeekExpenses(newWeeklyExpenses);
+    const WeeklyExpenses = getSelectedExpenses(expenses, weekBegin, weekEnd);
+    setCurrentWeekExpenses(WeeklyExpenses);
 
-    const newMoneySpent = getWeeklyMoneySpent(newWeeklyExpenses);
+    const newMoneySpent = getMoneySpent(WeeklyExpenses);
     setMoneySpent(newMoneySpent);
   }, [expenses]);
 
@@ -48,27 +45,22 @@ function ExpensesTable() {
       weekEnd.setDate(weekEnd.getDate() - 7);
     }
     setCurrentWeek({ weekBeginning: weekBegin, weekEnding: weekEnd });
-    setCurrentMonth(weekBegin.getMonth());
 
-    const newWeeklyExpenses = getWeeklyExpenses(expenses, weekBegin, weekEnd);
+    const newWeeklyExpenses = getSelectedExpenses(expenses, weekBegin, weekEnd);
     setCurrentWeekExpenses(newWeeklyExpenses);
 
-    const newMoneySpent = getWeeklyMoneySpent(newWeeklyExpenses);
+    const newMoneySpent = getMoneySpent(newWeeklyExpenses);
     setMoneySpent(newMoneySpent);
   };
 
   return (
     <>
       <section className='date-selector'>
-        {currentMonth && currentWeek ? (
-          <DateSelector
-            currentWeek={currentWeek}
-            currentMonth={currentMonth}
-            changeWeek={changeWeek}
-          />
+        {currentWeek ? (
+          <DateSelector currentWeek={currentWeek} changeDates={changeWeek} />
         ) : null}
       </section>
-      <h2>expenses table</h2>
+      <h2>Weekly Expenses Table</h2>
       <p>Weekly Budget: £{budget.toFixed(2)}</p>
       <p>Amount Spent: £{moneySpent.toFixed(2)}</p>
       <p>Budget Remaining: £{(budget - moneySpent).toFixed(2)}</p>
@@ -100,4 +92,4 @@ function ExpensesTable() {
   );
 }
 
-export default ExpensesTable;
+export default ExpensesTableWeek;

@@ -48,10 +48,19 @@ const deleteExpense = async (req, res) => {
   const { id } = req.params;
   try {
     const expense = await Expense.deleteOne({ _id: id });
-    res.status(200).json(expense);
+    res.status(200).json({ message: 'expense deleted successsfully' });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-module.exports = { getAllExpenses, createExpense, deleteExpense };
+//edit expense
+const editExpense = async (req, res) => {
+  const { id } = req.params;
+  try {
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = { getAllExpenses, createExpense, deleteExpense, editExpense };

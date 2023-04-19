@@ -4,6 +4,7 @@ const {
   getAllExpenses,
   createExpense,
   deleteExpense,
+  editExpense,
 } = require('../controllers/expensesController');
 
 //initialise express router
@@ -17,5 +18,8 @@ router.post('/', createExpense);
 
 //delete expense
 router.delete('/:id', deleteExpense);
+
+//edit expense
+router.patch('/:id', editExpense);
 
 module.exports = router;

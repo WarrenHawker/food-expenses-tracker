@@ -87,22 +87,19 @@ const resetTimeEnd = (date: Date): Date => {
   return date;
 };
 
-const getWeeklyExpenses = (
-  expenses: Expense[],
-  weekBegin: Date,
-  weekEnd: Date
-): Expense[] => {
+//prettier-ignore
+const getSelectedExpenses = (expenses: Expense[], dateBegin: Date, dateEnd: Date): Expense[] => {
   const newWeeklyExpenses = expenses.filter((item) => {
     const date = new Date(item.date);
     return (
-      date.getTime() >= weekBegin.getTime() &&
-      date.getTime() <= weekEnd.getTime()
+      date.getTime() >= dateBegin.getTime() &&
+      date.getTime() <= dateEnd.getTime()
     );
   });
   return newWeeklyExpenses;
 };
 
-const getWeeklyMoneySpent = (expenses: Expense[]): number => {
+const getMoneySpent = (expenses: Expense[]): number => {
   return expenses
     .map((item) => {
       return parseFloat(item.amount);
@@ -118,6 +115,6 @@ export {
   getWeekBeginning,
   resetTimeZero,
   resetTimeEnd,
-  getWeeklyExpenses,
-  getWeeklyMoneySpent,
+  getSelectedExpenses,
+  getMoneySpent,
 };
