@@ -1,15 +1,15 @@
-import { getMonthName, dateToString } from '../misc/functions';
+import { getMonthName, dateToWordString } from '../misc/functions';
 import { DateSelectorProps } from '../misc/interfaces';
 
 //prettier-ignore
 function DateSelector({ currentWeek, currentMonth, currentYear, changeDates }: DateSelectorProps) {
   return (
     <div className='date-selector'>
-      <button onClick={() => changeDates('prev')}>Prev</button>
-      <h3>{currentWeek ? `${dateToString(currentWeek.weekBeginning)} - ${dateToString(
-            currentWeek.weekEnding
+      <button className='btn btn-secondary' onClick={() => changeDates('prev')}>Prev</button>
+      <h3>{currentWeek ? `${dateToWordString(currentWeek.weekBeginning, false)} - ${dateToWordString(
+            currentWeek.weekEnding, false
           )}` : `${getMonthName(currentMonth!)} ${currentYear}` }</h3>
-      <button onClick={() => changeDates('next')}>Next</button>
+      <button className='btn btn-secondary' onClick={() => changeDates('next')}>Next</button>
     </div>
   )
   

@@ -1,0 +1,10 @@
+.date-selector {
+    display: flex;
+    margin: auto;
+    gap: 2em;
+}
+
+.date-selector h3 {
+    width: 400px;
+    text-align: center;
+}

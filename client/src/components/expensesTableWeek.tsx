@@ -60,34 +60,48 @@ function ExpensesTableWeek() {
           <DateSelector currentWeek={currentWeek} changeDates={changeWeek} />
         ) : null}
       </section>
-      <h2>Weekly Expenses Table</h2>
-      <p>Weekly Budget: £{budget.toFixed(2)}</p>
-      <p>Amount Spent: £{moneySpent.toFixed(2)}</p>
-      <p>Budget Remaining: £{(budget - moneySpent).toFixed(2)}</p>
-      <table>
-        <thead>
-          <tr>
-            <th>Bought from</th>
-            <th>Amount Paid</th>
-            <th>Date</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentWeekExpenses
-            ? currentWeekExpenses.map((item: Expense) => (
-                <IndividualExpense
-                  key={item._id}
-                  _id={item._id}
-                  company={item.company}
-                  amount={item.amount}
-                  date={new Date(item.date)}
-                  notes={item.notes}
-                />
-              ))
-            : null}
-        </tbody>
-      </table>
+      <h2 className='table-title'>Weekly Expenses Table</h2>
+      <section className='budget-display'>
+        <h3>
+          Weekly Budget: <span>£{budget.toFixed(2)}</span>
+        </h3>
+        <h3>
+          Amount Spent: <span>£{moneySpent.toFixed(2)}</span>
+        </h3>
+        <h3>
+          Budget Remaining: <span>£{(budget - moneySpent).toFixed(2)}</span>
+        </h3>
+      </section>
+      {currentWeekExpenses && currentWeekExpenses.length > 0 ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Bought from</th>
+              <th className='amount-heading'>Amount Paid</th>
+              <th>Date</th>
+              <th>Notes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className='empty-row'></tr>
+            {currentWeekExpenses.map((item: Expense) => (
+              <IndividualExpense
+                key={item._id}
+                _id={item._id}
+                company={item.company}
+                amount={item.amount}
+                date={new Date(item.date)}
+                notes={item.notes}
+              />
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <h3 className='no-expenses-message'>
+          There are no expenses recorded for this time period
+        </h3>
+      )}
     </>
   );
 }

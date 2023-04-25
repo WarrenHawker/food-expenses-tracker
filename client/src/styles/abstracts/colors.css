@@ -1,0 +1,13 @@
+:root {
+    --color-primary-base: #12afaf;
+    --color-primary-light:#6cefef;
+    --color-primary-lighter:#dafbfb;
+    --color-background: #f2fdfd;
+
+    --color-secondary-base:	#127baf;
+    --color-secondary-light: #6cc3ef;
+    --color-secondary-lighter: #daf0fb;
+
+
+    --color-test: blue;
+}

@@ -1,0 +1,17 @@
+header {
+    background-color: var(--color-primary-base);
+}
+
+.head-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.head-section * {
+    margin: 0;
+    color: #ffffff;
+}

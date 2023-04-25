@@ -24,6 +24,53 @@ const dateToString = (date: Date | undefined, reversed:boolean = false): string 
   
 };
 
+//prettier-ignore
+const dateToWordString = (date: Date | undefined, includeDay:boolean = true): string => {
+  if (!date) {
+    return '';
+  }
+  let day: string;
+  if (date.getDate() == 1 || date.getDate() == 21 || date.getDate() == 31) {
+    day = `${date.getDate().toString()}st`;
+  } else if (date.getDate() == 2 || date.getDate() == 22) {
+    day = `${date.getDate().toString()}nd`;
+  } else if (date.getDate() == 3 || date.getDate() == 23) {
+    day = `${date.getDate().toString()}rd`;
+  } else {
+    day = `${date.getDate().toString()}th`;
+  }
+  const month = getMonthName(date.getMonth());
+  const year = date.getFullYear()
+  let weekDay = '';
+  if(includeDay) {
+    weekDay = getWeekDay(date.getDay())
+    return `${weekDay} ${day} ${month} ${year}`
+  } else {
+    return `${day} ${month} ${year}`
+  }
+};
+
+const getWeekDay = (day: number): string => {
+  switch (day) {
+    case 0:
+      return 'Sunday';
+    case 1:
+      return 'Monday';
+    case 2:
+      return 'Tuesday';
+    case 3:
+      return 'Wednesday';
+    case 4:
+      return 'Thursday';
+    case 5:
+      return 'Friday';
+    case 6:
+      return 'Saturday';
+    default:
+      return '';
+  }
+};
+
 const getMonthName = (month: number): string => {
   switch (month) {
     case 0:
@@ -90,7 +137,7 @@ const resetTimeEnd = (date: Date): Date => {
 //prettier-ignore
 const getSelectedExpenses = (expenses: Expense[], dateBegin: Date, dateEnd: Date): Expense[] => {
   const newWeeklyExpenses = expenses.filter((item) => {
-    const date = new Date(item.date);
+    const date = new Date(item.date!);
     return (
       date.getTime() >= dateBegin.getTime() &&
       date.getTime() <= dateEnd.getTime()
@@ -117,4 +164,5 @@ export {
   resetTimeEnd,
   getSelectedExpenses,
   getMoneySpent,
+  dateToWordString,
 };

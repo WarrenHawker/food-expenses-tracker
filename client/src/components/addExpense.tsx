@@ -45,45 +45,75 @@ function AddExpense() {
     }
   };
 
+  const clearForm = () => {
+    setAmountInput('');
+    setCompanyInput('');
+    setDateInput(undefined);
+    setNotesInput('');
+    setError('');
+    setEmptyFields([]);
+  };
+
   const useTodayDate = (e: React.FormEvent) => {
     e.preventDefault();
     setDateInput(new Date());
   };
   return (
     <section className='form-container'>
-      <h2>Add new Expense</h2>
+      <h1>Add New Expense</h1>
       <form onSubmit={handleFormSubmit}>
-        <label htmlFor='company'>Bought from (shop or company)</label>
-        <input
-          className={emptyFields.includes('company') ? 'invalid' : ''}
-          type='text'
-          name='company'
-          value={companyInput}
-          onChange={(e) => setCompanyInput(e.target.value)}
-        />
-        <label htmlFor='amount'>Amount paid (£)</label>
-        <input
-          className={emptyFields.includes('amount') ? 'invalid' : ''}
-          type='number'
-          name='amount'
-          value={amountInput}
-          onChange={(e) => setAmountInput(e.target.value)}
-        />
-        <label htmlFor='date'>Date</label>
-        <input
-          className={emptyFields.includes('date') ? 'invalid' : ''}
-          type='date'
-          name='date'
-          value={dateToString(dateInput, true)}
-          onChange={(e) => setDateInput(new Date(e.target.value))}
-        />
-        <button onClick={useTodayDate}>Use Today's Date</button>
-        <label htmlFor='notes'>Notes</label>
-        <textarea
-          value={notesInput}
-          onChange={(e) => setNotesInput(e.target.value)}
-        />
-        <button>Add expense</button>
+        <div className='input-container'>
+          <label htmlFor='company'>Bought from (shop or company)</label>
+          <input
+            className={emptyFields.includes('company') ? 'invalid' : ''}
+            type='text'
+            name='company'
+            value={companyInput}
+            onChange={(e) => setCompanyInput(e.target.value)}
+          />
+        </div>
+        <div className='input-container'>
+          <label htmlFor='amount'>Amount paid (£)</label>
+          <input
+            className={emptyFields.includes('amount') ? 'invalid' : ''}
+            type='number'
+            name='amount'
+            value={amountInput}
+            onChange={(e) => setAmountInput(e.target.value)}
+          />
+        </div>
+        <div className='input-container'>
+          <label htmlFor='date'>Date</label>
+          <button className='btn btn-secondary' onClick={useTodayDate}>
+            Use Today's Date
+          </button>
+          <input
+            className={emptyFields.includes('date') ? 'invalid' : ''}
+            type='date'
+            name='date'
+            value={dateToString(dateInput, true)}
+            onChange={(e) => setDateInput(new Date(e.target.value))}
+          />
+        </div>
+
+        <div className='input-container'>
+          <label htmlFor='notes'>Notes</label>
+          <textarea
+            value={notesInput}
+            onChange={(e) => setNotesInput(e.target.value)}
+          />
+        </div>
+        <div className='button-container'>
+          <button
+            type='button'
+            className='btn btn-secondary'
+            onClick={clearForm}>
+            Reset
+          </button>
+          <button type='submit' className='btn btn-primary'>
+            Add expense
+          </button>
+        </div>
       </form>
       {error ? <p className='error'>{error}</p> : null}
     </section>

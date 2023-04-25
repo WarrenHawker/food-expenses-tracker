@@ -1,0 +1,14 @@
+.budget-display {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 2em;
+}
+
+.budget-display h3 {
+    margin-top: 0;
+}
+
+.budget-display span {
+    font-weight: normal;
+    margin-left: 0.25em;
+}

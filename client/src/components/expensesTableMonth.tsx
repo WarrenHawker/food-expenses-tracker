@@ -9,7 +9,7 @@ function ExpensesTableMonth() {
   const { expenses } = useExpenses();
   const [currentMonth, setCurrentMonth] = useState<number>(0);
   const [currentYear, setCurrentYear] = useState<number>(2023);
-  const [budget, setBudget] = useState<number>(200);
+  const [budget, setBudget] = useState<number>(250);
   const [moneySpent, setMoneySpent] = useState<number>(0);
   const [currentMonthExpenses, setCurrentMonthExpenses] = useState<Expense[]>();
   const [today, setToday] = useState(new Date());
@@ -61,34 +61,49 @@ function ExpensesTableMonth() {
           changeDates={changeMonth}
         />
       </section>
-      <h2>Monthly Expenses Table</h2>
-      <p>Monthly Budget: £{budget.toFixed(2)}</p>
-      <p>Amount Spent: £{moneySpent.toFixed(2)}</p>
-      <p>Budget Remaining: £{(budget - moneySpent).toFixed(2)}</p>
-      <table>
-        <thead>
-          <tr>
-            <th>Bought from</th>
-            <th>Amount Paid</th>
-            <th>Date</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentMonthExpenses
-            ? currentMonthExpenses.map((item: Expense) => (
-                <IndividualExpense
-                  key={item._id}
-                  _id={item._id}
-                  company={item.company}
-                  amount={item.amount}
-                  date={new Date(item.date)}
-                  notes={item.notes}
-                />
-              ))
-            : null}
-        </tbody>
-      </table>
+      <h2 className='table-title'>Monthly Expenses Table</h2>
+      <section className='budget-display'>
+        <h3>
+          Monthly Budget: <span>£{budget.toFixed(2)}</span>
+        </h3>
+        <h3>
+          Amount Spent: <span>£{moneySpent.toFixed(2)}</span>
+        </h3>
+        <h3>
+          Budget Remaining: <span>£{(budget - moneySpent).toFixed(2)}</span>
+        </h3>
+      </section>
+
+      {currentMonthExpenses && currentMonthExpenses.length > 0 ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Bought from</th>
+              <th className='amount-heading'>Amount Paid</th>
+              <th>Date</th>
+              <th>Notes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className='empty-row'></tr>
+            {currentMonthExpenses.map((item: Expense) => (
+              <IndividualExpense
+                key={item._id}
+                _id={item._id}
+                company={item.company}
+                amount={item.amount}
+                date={new Date(item.date)}
+                notes={item.notes}
+              />
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <h3 className='no-expenses-message'>
+          There are no expenses recorded for this time period
+        </h3>
+      )}
     </>
   );
 }

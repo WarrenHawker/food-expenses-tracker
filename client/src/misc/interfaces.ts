@@ -6,10 +6,18 @@ export interface Expense {
   notes: string;
 }
 
+export interface EditedExpense {
+  company: string | null;
+  date: Date | null;
+  amount: string | null;
+  notes: string | null;
+}
+
 export interface UseExpensesProps {
   expenses: Expense[];
   addExpense: (data: Expense) => void;
   deleteExpense: (_id: string) => void;
+  editExpense: (_id: string, update: Expense) => void;
 }
 export interface CurrentWeek {
   weekBeginning: Date;

@@ -1,17 +1,32 @@
+@import url('abstracts/colors.css');
+@import url('components/buttons.css');
+@import url('components/date-selector.css');
+@import url('components/header.css');
+@import url('components/budget-display.css');
+@import url('components/form.css');
+@import url('components/table.css');
+
+
 *, *::before, *::after {
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
+  background-color: var(--color-background);
 }
 
-.invalid {
-  border: 2px red dashed;
+main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1em;
 }
 
-label, input, textarea {
-  display: block;
-  margin: 0.5em;
+.table-title {
+  text-align: center;
 }

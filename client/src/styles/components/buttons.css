@@ -1,0 +1,60 @@
+.button-container {
+	display: flex;
+	max-width: 600px;
+	margin: auto;
+}
+
+.btn {
+    display: block;
+	transition: all 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+	border-radius: 20px;
+	padding: 10px;
+	margin: 5px;
+	text-align: center;
+	margin: auto;
+	width: 150px;
+	cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--color-primary-light);
+	background: linear-gradient(90deg, var(--color-primary-light) 0%, var(--color-secondary-light) 100%);
+	color: #000000;
+}
+
+.btn-secondary {
+    position: relative;
+	border: none;
+	background-color: var(--color-background);
+}
+
+.btn-secondary::before {
+	content: '';
+	border-color: #ffffff;
+	position: absolute;
+	inset: 0;
+	border-radius: 20px;
+	padding: 2px;
+	background: linear-gradient(45deg, var(--color-primary-light), var(--color-secondary-light));
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+}
+
+.btn:hover, .btn:focus {
+    transform: scale(1.1);
+	text-decoration: none;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background: var(--color-primary-base);
+	background: linear-gradient(90deg, var(--color-primary-base) 0%, var(--color-secondary-base) 100%);
+	color: #ffffff;
+}
+
+.btn-secondary:hover, .btn-secondary:focus {
+    background: var(--color-primary-light);
+	background: linear-gradient(90deg, var(--color-primary-light) 0%, var(--color-secondary-light) 100%);
+	color: #000000;
+}
+
