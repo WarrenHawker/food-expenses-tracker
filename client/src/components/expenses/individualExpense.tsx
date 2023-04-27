@@ -1,6 +1,6 @@
-import { dateToString } from '../misc/functions';
-import { Expense, EditedExpense } from '../misc/interfaces';
-import { useExpenses } from '../context/expensesContext';
+import { dateToString } from '../../misc/functions';
+import { Expense, EditedExpense } from '../../misc/interfaces';
+import { useExpenses } from '../../context/expensesContext';
 import { useState, useRef, useEffect } from 'react';
 
 function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
@@ -135,23 +135,25 @@ function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
           onChange={(e) => updateEditedFields('notes', e.target.value)}
         />
       </td>
-      {editing ? (
-        <>
-          <button className='btn-table btn-save' onClick={saveEdits}>
-            Save
+      <td>
+        {editing ? (
+          <>
+            <button className='btn-table btn-save' onClick={saveEdits}>
+              Save
+            </button>
+            <button className='btn-table btn-cancel' onClick={disableEditing}>
+              Cancel
+            </button>
+          </>
+        ) : (
+          <button className='btn-table btn-edit' onClick={enableEditing}>
+            Edit
           </button>
-          <button className='btn-table btn-cancel' onClick={disableEditing}>
-            Cancel
-          </button>
-        </>
-      ) : (
-        <button className='btn-table btn-edit' onClick={enableEditing}>
-          Edit
+        )}
+        <button className='btn-table btn-delete' onClick={deleteHandler}>
+          Delete
         </button>
-      )}
-      <button className='btn-table btn-delete' onClick={deleteHandler}>
-        Delete
-      </button>
+      </td>
     </tr>
   );
 }

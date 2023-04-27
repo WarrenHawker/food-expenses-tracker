@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Expense } from '../misc/interfaces';
+import { Expense } from '../../misc/interfaces';
 import IndividualExpense from './individualExpense';
-import { useExpenses } from '../context/expensesContext';
-import DateSelector from './dateSelector';
-import { getSelectedExpenses, getMoneySpent } from '../misc/functions';
+import { useExpenses } from '../../context/expensesContext';
+import DateSelector from '../dateSelector';
+import { getSelectedExpenses, getMoneySpent } from '../../misc/functions';
 
 function ExpensesTableMonth() {
   const { expenses } = useExpenses();

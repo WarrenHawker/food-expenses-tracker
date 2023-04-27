@@ -70,6 +70,7 @@ table textarea:disabled {
 }
 
 .btn-delete {
+    padding: 0.5em;
 	width: 120px;
 	background-color: 	#ef6c6c;
     color: #ffffff;

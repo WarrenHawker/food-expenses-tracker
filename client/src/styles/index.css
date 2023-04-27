@@ -30,3 +30,7 @@ main {
 .table-title {
   text-align: center;
 }
+
+.login-signup-forms {
+  display: flex;
+}

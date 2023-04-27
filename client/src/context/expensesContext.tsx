@@ -42,8 +42,12 @@ export const ExpenseContextProvider = ({ children }: {children:ReactNode}) => {
       setExpenses(prev => [data, ...prev])
   }
 
+  const setExpensesData = ():void => {
+    setExpenses([])
+  }
+
   return (
-    <ExpensesContext.Provider value={{expenses, addExpense, deleteExpense, editExpense}}>
+    <ExpensesContext.Provider value={{expenses, addExpense, deleteExpense, editExpense, setExpensesData}}>
       {children}
     </ExpensesContext.Provider>
   );

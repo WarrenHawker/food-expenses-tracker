@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Expense, CurrentWeek } from '../misc/interfaces';
+import { Expense, CurrentWeek } from '../../misc/interfaces';
 import IndividualExpense from './individualExpense';
-import { useExpenses } from '../context/expensesContext';
-import DateSelector from './dateSelector';
+import { useExpenses } from '../../context/expensesContext';
+import DateSelector from '../dateSelector';
 import {
   getWeekBeginning,
   resetTimeZero,
   resetTimeEnd,
   getSelectedExpenses,
   getMoneySpent,
-} from '../misc/functions';
+} from '../../misc/functions';
 
 function ExpensesTableWeek() {
   const { expenses } = useExpenses();

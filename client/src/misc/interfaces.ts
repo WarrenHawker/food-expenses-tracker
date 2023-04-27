@@ -6,6 +6,13 @@ export interface Expense {
   notes: string;
 }
 
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+  token: string;
+}
+
 export interface EditedExpense {
   company: string | null;
   date: Date | null;
@@ -18,6 +25,13 @@ export interface UseExpensesProps {
   addExpense: (data: Expense) => void;
   deleteExpense: (_id: string) => void;
   editExpense: (_id: string, update: Expense) => void;
+  setExpensesData: () => void;
+}
+
+export interface useAuthProps {
+  user: User | undefined;
+  login: (newUser: User) => void;
+  logout: () => void;
 }
 export interface CurrentWeek {
   weekBeginning: Date;

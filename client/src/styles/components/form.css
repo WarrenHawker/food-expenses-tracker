@@ -16,6 +16,10 @@
     border: 2px red dashed;
 }
 
+.error {
+    color: red;
+}
+
 .input-container {
     display: flex;
     width: 100%;

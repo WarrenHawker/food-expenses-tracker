@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 const expensesRoutes = require('./routes/expensesRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 //initialise express app
 const app = express();
@@ -18,6 +19,7 @@ app.use(cors());
 
 //routes
 app.use('/api/expenses', expensesRoutes);
+app.use('/api/user', userRoutes);
 
 //connect to DB and start server
 mongoose
