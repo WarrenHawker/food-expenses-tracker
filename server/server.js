@@ -10,7 +10,7 @@ const userRoutes = require('./routes/userRoutes');
 const app = express();
 
 //port and DB variables - imported from .env file
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 const db = process.env.DB || 'mongodb://localhost:27017';
 
 //middleware
@@ -19,7 +19,15 @@ app.use(cors());
 mongoose.set('strictQuery', true);
 
 app.use((req, res, next) => {
-  console.log(req.path, req.method);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'OPTIONS, GET, POST, PUT, PATCH, DELETE'
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
   next();
 });
 
@@ -31,10 +39,14 @@ app.use('/api/user', userRoutes);
 mongoose
   .connect(db)
   .then(() => {
-    app.listen(port, () =>
-      console.log(`Connected to MongoDB, server running on port ${port}`)
-    );
+    if (port) {
+      app.listen(port, () =>
+        console.log(`Connected to MongoDB, server running on port ${port}`)
+      );
+    }
   })
   .catch((error) => {
     console.log(error);
   });
+
+module.exports = app;

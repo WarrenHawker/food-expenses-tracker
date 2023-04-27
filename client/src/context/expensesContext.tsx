@@ -25,7 +25,7 @@ export const ExpenseContextProvider = ({ children }: {children:ReactNode}) => {
     if(!user) {
       return
     }
-    const response = await fetch('http://localhost:5000/api/expenses', {
+    const response = await fetch('https://food-expenses-tracker.vercel.app/api/expenses', {
       headers: {
         //prettier-ignore
         'Authorization': `Bearer ${user.token}`,
