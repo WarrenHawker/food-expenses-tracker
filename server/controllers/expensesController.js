@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 
 //get all expenses
 const getAllExpenses = async (req, res) => {
-  const expenses = await Expense.find({}).sort({ date: -1 });
+  const user_id = req.user._id;
+  const expenses = await Expense.find({ user_id }).sort({ date: -1 });
 
   res.status(200).json(expenses);
 };
@@ -31,11 +32,13 @@ const createExpense = async (req, res) => {
   }
 
   try {
+    const user_id = req.user._id;
     const expense = await Expense.create({
       company,
       date,
       amount,
       notes,
+      user_id,
     });
     res.status(200).json(expense);
   } catch (error) {
@@ -58,6 +61,7 @@ const deleteExpense = async (req, res) => {
 const editExpense = async (req, res) => {
   const { id } = req.params;
   const { company, amount, date, notes } = req.body;
+  console.log(req.body);
   let update = {};
   if (company) {
     update.company = company;
@@ -78,7 +82,6 @@ const editExpense = async (req, res) => {
 
   try {
     const expense = await Expense.findOneAndUpdate({ _id: id }, update);
-    console.log(expense);
     return res.status(200).json(expense);
   } catch (error) {
     return res.status(400).json({ error: error.message });

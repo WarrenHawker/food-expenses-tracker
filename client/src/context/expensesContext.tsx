@@ -6,20 +6,31 @@ import {
   ReactNode,
 } from 'react';
 import { Expense, UseExpensesProps } from '../misc/interfaces';
+import { useAuth } from './authContext';
 
 const ExpensesContext = createContext({} as UseExpensesProps);
 
 export const useExpenses = () => useContext(ExpensesContext);
+
 //prettier-ignore
 export const ExpenseContextProvider = ({ children }: {children:ReactNode}) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
+  const {user} = useAuth();
 
   useEffect(() => {
     fetchExpenses();
-  }, []);
+  }, [user]);
 
   const fetchExpenses = async () => {
-    const response = await fetch('http://localhost:5000/api/expenses');
+    if(!user) {
+      return
+    }
+    const response = await fetch('http://localhost:5000/api/expenses', {
+      headers: {
+        //prettier-ignore
+        'Authorization': `Bearer ${user.token}`,
+      }
+    });
     const data = await response.json();
     setExpenses(data);
   };

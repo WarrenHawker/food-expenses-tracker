@@ -21,6 +21,10 @@ const expensesSchema = new Schema({
   notes: {
     type: String,
   },
+  user_id: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('Expenses', expensesSchema);

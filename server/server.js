@@ -16,6 +16,12 @@ const db = process.env.DB || 'mongodb://localhost:27017';
 //middleware
 app.use(express.json());
 app.use(cors());
+mongoose.set('strictQuery', true);
+
+app.use((req, res, next) => {
+  console.log(req.path, req.method);
+  next();
+});
 
 //routes
 app.use('/api/expenses', expensesRoutes);

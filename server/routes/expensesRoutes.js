@@ -6,9 +6,13 @@ const {
   deleteExpense,
   editExpense,
 } = require('../controllers/expensesController');
+const requireAuth = require('../middleware/requireAuth');
 
 //initialise express router
 const router = express.Router();
+
+//require auth for all expenses routes
+router.use(requireAuth);
 
 //get all expenses
 router.get('/', getAllExpenses);

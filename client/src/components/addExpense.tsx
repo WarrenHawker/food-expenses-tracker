@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { dateToString } from '../misc/functions';
 import { useExpenses } from '../context/expensesContext';
+import { useAuth } from '../context/authContext';
 
 function AddExpense() {
   const [companyInput, setCompanyInput] = useState<string>('');
@@ -11,6 +12,7 @@ function AddExpense() {
   const [emptyFields, setEmptyFields] = useState<string[]>([]);
 
   const { addExpense } = useExpenses();
+  const { user } = useAuth();
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,11 +23,16 @@ function AddExpense() {
       notes: notesInput,
     };
 
+    if (!user) {
+      return;
+    }
     const response = await fetch('http://localhost:5000/api/expenses', {
       method: 'POST',
       body: JSON.stringify(expense),
       headers: {
         'Content-Type': 'application/json',
+        //prettier-ignore
+        'Authorization': `Bearer ${user.token}`,
       },
     });
     const json = await response.json();

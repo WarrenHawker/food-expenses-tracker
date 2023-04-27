@@ -2,9 +2,11 @@ import { dateToString } from '../../misc/functions';
 import { Expense, EditedExpense } from '../../misc/interfaces';
 import { useExpenses } from '../../context/expensesContext';
 import { useState, useRef, useEffect } from 'react';
+import { useAuth } from '../../context/authContext';
 
 function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
   const { deleteExpense, editExpense } = useExpenses();
+  const { user } = useAuth();
   const [editing, setEditing] = useState(false);
   const [editedFields, setEditedFields] = useState<EditedExpense>({
     company: null,
@@ -17,16 +19,25 @@ function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
   const dateInput = useRef<HTMLInputElement>(null);
   const notesInput = useRef<HTMLTextAreaElement>(null);
 
+  console.log(editedFields);
+
   useEffect(() => {
     notesInput.current!.style.height = notesInput.current!.scrollHeight + 'px';
   }, []);
 
   const deleteHandler = async () => {
+    if (!user) {
+      return;
+    }
     if (window.confirm('Are you sure you wish to delete this entry?')) {
       const response = await fetch(
         `http://localhost:5000/api/expenses/${_id}`,
         {
           method: 'DELETE',
+          headers: {
+            //prettier-ignore
+            'Authorization': `Bearer ${user.token}`,
+          },
         }
       );
       if (response.ok) {
@@ -36,16 +47,29 @@ function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
   };
 
   const saveEdits = async () => {
+    if (!user) {
+      return;
+    }
     const response = await fetch(`http://localhost:5000/api/expenses/${_id}`, {
       method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        //prettier-ignore
+        'Authorization': `Bearer ${user.token}`,
+      },
       body: JSON.stringify(editedFields),
     });
     if (response.ok) {
-      console.log(response.json());
-      // editExpense(_id, data)
+      const json = await response.json();
+      notesInput.current!.style.height =
+        notesInput.current!.scrollHeight + 5 + 'px';
+      companyInput.current!.disabled = true;
+      amountInput.current!.disabled = true;
+      dateInput.current!.disabled = true;
+      notesInput.current!.disabled = true;
+      setEditedFields({ company: null, amount: null, date: null, notes: null });
+      setEditing(false);
     }
-    notesInput.current!.style.height =
-      notesInput.current!.scrollHeight + 5 + 'px';
   };
 
   const updateEditedFields = (field: string, value: string) => {
