@@ -30,6 +30,7 @@ export interface UseExpensesProps {
 
 export interface useAuthProps {
   user: User | undefined;
+  serverBaseURL: string;
   login: (newUser: User) => void;
   logout: () => void;
 }

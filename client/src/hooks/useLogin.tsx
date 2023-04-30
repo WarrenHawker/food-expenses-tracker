@@ -4,13 +4,13 @@ import { useAuth } from '../context/authContext';
 export const useLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, serverBaseURL } = useAuth();
 
   const loginUser = async (email: string, password: string) => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(`${import.meta.env.BASE_URL}/api/user/login`, {
+    const response = await fetch(`${serverBaseURL}/api/user/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

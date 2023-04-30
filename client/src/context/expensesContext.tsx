@@ -15,7 +15,7 @@ export const useExpenses = () => useContext(ExpensesContext);
 //prettier-ignore
 export const ExpenseContextProvider = ({ children }: {children:ReactNode}) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
-  const {user} = useAuth();
+  const {user, serverBaseURL} = useAuth();
 
   useEffect(() => {
     fetchExpenses();
@@ -25,7 +25,7 @@ export const ExpenseContextProvider = ({ children }: {children:ReactNode}) => {
     if(!user) {
       return
     }
-    const response = await fetch(`${import.meta.env.BASE_URL}/api/expenses`, {
+    const response = await fetch(`${serverBaseURL}/api/expenses`, {
       headers: {
         //prettier-ignore
         'Authorization': `Bearer ${user.token}`,

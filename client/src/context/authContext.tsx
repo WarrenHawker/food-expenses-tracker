@@ -13,6 +13,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | undefined>();
+  const serverBaseURL = 'https://food-expenses-server.onrender.com';
 
   console.log(user);
 
@@ -33,7 +34,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ serverBaseURL, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -6,7 +6,7 @@ import { useAuth } from '../../context/authContext';
 
 function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
   const { deleteExpense, editExpense } = useExpenses();
-  const { user } = useAuth();
+  const { user, serverBaseURL } = useAuth();
   const [editing, setEditing] = useState(false);
   const [editedFields, setEditedFields] = useState<EditedExpense>({
     company: null,
@@ -50,7 +50,7 @@ function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
     if (!user) {
       return;
     }
-    const response = await fetch(`http://localhost:5000/api/expenses/${_id}`, {
+    const response = await fetch(`${serverBaseURL}/api/expenses/${_id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

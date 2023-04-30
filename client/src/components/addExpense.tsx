@@ -12,7 +12,7 @@ function AddExpense() {
   const [emptyFields, setEmptyFields] = useState<string[]>([]);
 
   const { addExpense } = useExpenses();
-  const { user } = useAuth();
+  const { user, serverBaseURL } = useAuth();
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +26,7 @@ function AddExpense() {
     if (!user) {
       return;
     }
-    const response = await fetch(`${import.meta.env.BASE_URL}/api/expenses`, {
+    const response = await fetch(`${serverBaseURL}/api/expenses`, {
       method: 'POST',
       body: JSON.stringify(expense),
       headers: {

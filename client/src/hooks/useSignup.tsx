@@ -4,20 +4,17 @@ import { useAuth } from '../context/authContext';
 export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, serverBaseURL } = useAuth();
 
   const signupUser = async (name: string, email: string, password: string) => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(
-      `${import.meta.env.BASE_URL}/api/user/signup`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
-      }
-    );
+    const response = await fetch(`${serverBaseURL}/api/user/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password }),
+    });
     const json = await response.json();
     console.log(json);
     if (!response.ok) {
