@@ -16,8 +16,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const serverBaseURL = 'https://food-expenses-server.onrender.com';
   // const serverBaseURL = 'http://localhost:5000';
 
-  console.log(user);
-
   useEffect(() => {
     const userStorage = localStorage.getItem('user');
     if (!userStorage) {

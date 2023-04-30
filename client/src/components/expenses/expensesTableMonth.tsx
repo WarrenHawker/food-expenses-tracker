@@ -7,6 +7,7 @@ import {
   getSelectedExpenses,
   getMoneySpent,
   calcRemainingBudget,
+  getLastDayOfMonth,
 } from '../../misc/functions';
 
 function ExpensesTableMonth() {
@@ -22,7 +23,7 @@ function ExpensesTableMonth() {
     const y = today.getFullYear();
     const m = today.getMonth();
     const firstDay = new Date(y, m, 1);
-    const lastDay = new Date(y, m + 1, 0);
+    const lastDay = new Date(y, m, getLastDayOfMonth(m));
 
     setCurrentMonth(today.getMonth());
     setCurrentYear(today.getFullYear());

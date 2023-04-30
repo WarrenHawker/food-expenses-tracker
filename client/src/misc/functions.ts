@@ -163,6 +163,23 @@ const calcRemainingBudget = (budget: number, moneySpent: number): number => {
   } else return budget - moneySpent;
 };
 
+const getLastDayOfMonth = (month: number): number => {
+  const dayMonth30 = [3, 5, 8, 10];
+  const dayMonth31 = [0, 2, 4, 6, 7, 9, 11];
+  dayMonth30.forEach((item) => {
+    if (item == month) {
+      return 30;
+    }
+  });
+  dayMonth31.forEach((item) => {
+    if (item == month) {
+      return 31;
+    }
+  });
+
+  return 28;
+};
+
 export {
   dateToString,
   getMonthName,
@@ -173,4 +190,5 @@ export {
   getMoneySpent,
   dateToWordString,
   calcRemainingBudget,
+  getLastDayOfMonth,
 };
