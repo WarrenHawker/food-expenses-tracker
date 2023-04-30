@@ -19,8 +19,6 @@ function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
   const dateInput = useRef<HTMLInputElement>(null);
   const notesInput = useRef<HTMLTextAreaElement>(null);
 
-  console.log(editedFields);
-
   useEffect(() => {
     notesInput.current!.style.height = notesInput.current!.scrollHeight + 'px';
   }, []);
@@ -30,16 +28,13 @@ function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
       return;
     }
     if (window.confirm('Are you sure you wish to delete this entry?')) {
-      const response = await fetch(
-        `http://localhost:5000/api/expenses/${_id}`,
-        {
-          method: 'DELETE',
-          headers: {
-            //prettier-ignore
-            'Authorization': `Bearer ${user.token}`,
-          },
-        }
-      );
+      const response = await fetch(`${serverBaseURL}/api/expenses/${_id}`, {
+        method: 'DELETE',
+        headers: {
+          //prettier-ignore
+          'Authorization': `Bearer ${user.token}`,
+        },
+      });
       if (response.ok) {
         deleteExpense(_id);
       }
