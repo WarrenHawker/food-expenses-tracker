@@ -72,9 +72,9 @@ table textarea:disabled {
 .btn-delete {
     padding: 0.5em;
 	width: 120px;
-	background-color: 	#ef6c6c;
+	background-color: 	var(--color-error);
     color: #ffffff;
-    border-color: 	#ef6c6c;
+    border-color: 	var(--color-error);
 }
 
 .btn-edit {

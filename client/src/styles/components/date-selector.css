@@ -8,3 +8,7 @@
     width: 400px;
     text-align: center;
 }
+
+.error {
+    color: var(--color-error);
+}

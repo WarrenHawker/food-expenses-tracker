@@ -26,7 +26,7 @@ function AddExpense() {
     if (!user) {
       return;
     }
-    const response = await fetch('http://localhost:5000/api/expenses', {
+    const response = await fetch(`${import.meta.env.BASE_URL}/api/expenses`, {
       method: 'POST',
       body: JSON.stringify(expense),
       headers: {

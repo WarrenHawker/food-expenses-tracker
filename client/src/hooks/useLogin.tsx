@@ -10,18 +10,13 @@ export const useLogin = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(
-      'https://food-expenses-tracker.vercel.app/api/user/login',
-      {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-        body: JSON.stringify({ email, password }),
-      }
-    );
+    const response = await fetch(`${import.meta.env.BASE_URL}/api/user/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
     const json = await response.json();
     if (!response.ok) {
       setIsLoading(false);

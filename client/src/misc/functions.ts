@@ -156,6 +156,13 @@ const getMoneySpent = (expenses: Expense[]): number => {
     }, 0);
 };
 
+const calcRemainingBudget = (budget: number, moneySpent: number): number => {
+  if (moneySpent > budget) {
+    //prettier-ignore
+    return Math.abs(budget-moneySpent);
+  } else return budget - moneySpent;
+};
+
 export {
   dateToString,
   getMonthName,
@@ -165,4 +172,5 @@ export {
   getSelectedExpenses,
   getMoneySpent,
   dateToWordString,
+  calcRemainingBudget,
 };

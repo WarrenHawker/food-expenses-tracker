@@ -3,7 +3,11 @@ import { Expense } from '../../misc/interfaces';
 import IndividualExpense from './individualExpense';
 import { useExpenses } from '../../context/expensesContext';
 import DateSelector from '../dateSelector';
-import { getSelectedExpenses, getMoneySpent } from '../../misc/functions';
+import {
+  getSelectedExpenses,
+  getMoneySpent,
+  calcRemainingBudget,
+} from '../../misc/functions';
 
 function ExpensesTableMonth() {
   const { expenses } = useExpenses();
@@ -69,8 +73,9 @@ function ExpensesTableMonth() {
         <h3>
           Amount Spent: <span>£{moneySpent.toFixed(2)}</span>
         </h3>
-        <h3>
-          Budget Remaining: <span>£{(budget - moneySpent).toFixed(2)}</span>
+        <h3 className={moneySpent > budget ? 'error' : ''}>
+          {moneySpent > budget ? 'Budget Overspent: ' : 'Budget Remaining: '}
+          <span>£{calcRemainingBudget(budget, moneySpent).toFixed(2)}</span>
         </h3>
       </section>
 
