@@ -1,10 +1,14 @@
 .form-container {
-    max-width: 1000px;
+    max-width: 400px;
     margin: 2em auto;
     border: 1px solid var(--color-primary-base);
     border-radius: 1em;
     padding: 1em;
     text-align: center;   
+}
+
+#new-expense-form {
+    max-width: 600px;
 }
 
 .form-container h1 {
@@ -46,4 +50,20 @@
 
 .input-container textarea {
     resize: vertical;
+}
+
+@media screen and (max-width: 450px) {
+    .input-container {
+        flex-direction: column;
+        margin-bottom: 1.5em;
+    }
+
+    .input-container label {
+        margin-top: 0;
+        margin-bottom: 0.5em;
+    }
+
+    .input-container input, .input-container textArea {
+        margin: 0;
+    }
 }

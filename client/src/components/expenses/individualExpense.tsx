@@ -14,13 +14,15 @@ function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
     date: null,
     notes: null,
   });
-  const companyInput = useRef<HTMLInputElement>(null);
+  const companyInput = useRef<HTMLTextAreaElement>(null);
   const amountInput = useRef<HTMLInputElement>(null);
   const dateInput = useRef<HTMLInputElement>(null);
   const notesInput = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     notesInput.current!.style.height = notesInput.current!.scrollHeight + 'px';
+    companyInput.current!.style.height =
+      companyInput.current!.scrollHeight + 'px';
   }, []);
 
   const deleteHandler = async () => {
@@ -117,16 +119,15 @@ function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
 
   return (
     <tr>
-      <td>
-        <input
-          type='text'
+      <td className='bought-from'>
+        <textarea
           ref={companyInput}
           defaultValue={company}
           disabled
           onChange={(e) => updateEditedFields('company', e.target.value)}
         />
       </td>
-      <td>
+      <td className='amount'>
         £
         <input
           className='amount-input'
@@ -137,7 +138,7 @@ function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
           onChange={(e) => updateEditedFields('amount', e.target.value)}
         />
       </td>
-      <td>
+      <td className='date'>
         <input
           type='date'
           ref={dateInput}
@@ -146,7 +147,7 @@ function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
           onChange={(e) => updateEditedFields('date', e.target.value)}
         />
       </td>
-      <td>
+      <td className='notes'>
         <textarea
           ref={notesInput}
           disabled
@@ -154,7 +155,7 @@ function IndividualExpense({ _id, company, amount, date, notes }: Expense) {
           onChange={(e) => updateEditedFields('notes', e.target.value)}
         />
       </td>
-      <td>
+      <td className='actions'>
         {editing ? (
           <>
             <button className='btn-table btn-save' onClick={saveEdits}>

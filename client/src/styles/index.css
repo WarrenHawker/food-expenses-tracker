@@ -31,6 +31,14 @@ main {
   text-align: center;
 }
 
-.login-signup-forms {
-  display: flex;
+.login-signup-forms .btn {
+  margin-top: 10px !important;
+}
+
+@media screen and (min-width: 850px) {
+  .login-signup-forms {
+    display: flex;
+  }
+
+  
 }

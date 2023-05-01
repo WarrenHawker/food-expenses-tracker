@@ -13,8 +13,8 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | undefined>();
-  const serverBaseURL = 'https://food-expenses-server.onrender.com';
-  // const serverBaseURL = 'http://localhost:5000';
+  // const serverBaseURL = 'https://food-expenses-server.onrender.com';
+  const serverBaseURL = 'http://localhost:5000';
 
   useEffect(() => {
     const userStorage = localStorage.getItem('user');

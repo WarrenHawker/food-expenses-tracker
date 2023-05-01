@@ -108,3 +108,68 @@ table textarea:disabled {
     text-align: center;
 }
 
+@media screen and (max-width: 1000px) {
+    tr {
+        display: grid;
+        grid-template-areas: 
+            "bought bought date"
+            "amount notes notes"
+            "actions actions actions";
+        margin-bottom: 1.5em;
+    }
+
+    .empty-row {
+        display: none;
+    }
+
+    th, td {
+        text-align: center !important;
+    }
+
+    th {
+        border-color: var(--color-primary-base) !important;
+        border-width: 3px !important;
+    }
+
+    th.bought-from, td.bought-from  {
+        grid-area: bought;
+        border-right: 1px solid grey;
+        border-bottom: 1px solid grey;  
+    }
+
+    th.date, td.date {
+        grid-area: date;
+        border-bottom: 1px solid grey;
+    }
+
+    th.amount, td.amount {
+        grid-area: amount;
+        border-right: 1px solid grey;
+        border-bottom: 1px solid grey;
+    }
+
+    th.notes, td.notes {
+        grid-area: notes;
+        border-bottom: 1px solid grey;
+    }
+
+    th.actions {
+        display: none;
+    }
+
+    td.actions {
+        grid-area: actions;
+        border-bottom: none;
+        border-right: none;
+    }
+
+    td.amount {
+        padding-left: 1em;
+        display: flex;
+        align-items: center;
+    }
+
+    td input, td textArea {
+        width: 100%;
+    }
+}

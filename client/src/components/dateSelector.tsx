@@ -4,13 +4,13 @@ import { DateSelectorProps } from '../misc/interfaces';
 //prettier-ignore
 function DateSelector({ currentWeek, currentMonth, currentYear, changeDates }: DateSelectorProps) {
   return (
-    <div className='date-selector'>
+    <section className='date-selector'>
       <button className='btn btn-secondary' onClick={() => changeDates('prev')}>Prev</button>
       <h3>{currentWeek ? `${dateToWordString(currentWeek.weekBeginning, false)} - ${dateToWordString(
             currentWeek.weekEnding, false
           )}` : `${getMonthName(currentMonth!)} ${currentYear}` }</h3>
       <button className='btn btn-secondary' onClick={() => changeDates('next')}>Next</button>
-    </div>
+    </section>
   )
   
 }

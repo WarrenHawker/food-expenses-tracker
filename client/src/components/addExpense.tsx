@@ -66,7 +66,7 @@ function AddExpense() {
     setDateInput(new Date());
   };
   return (
-    <section className='form-container'>
+    <section className='form-container' id='new-expense-form'>
       <h1>Add New Expense</h1>
       <form onSubmit={handleFormSubmit}>
         <div className='input-container'>

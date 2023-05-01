@@ -56,11 +56,9 @@ function ExpensesTableWeek() {
 
   return (
     <>
-      <section className='date-selector'>
-        {currentWeek ? (
-          <DateSelector currentWeek={currentWeek} changeDates={changeWeek} />
-        ) : null}
-      </section>
+      {currentWeek ? (
+        <DateSelector currentWeek={currentWeek} changeDates={changeWeek} />
+      ) : null}
       <h2 className='table-title'>Weekly Expenses Table</h2>
       <section className='budget-display'>
         <h3>
@@ -78,11 +76,11 @@ function ExpensesTableWeek() {
         <table>
           <thead>
             <tr>
-              <th>Bought from</th>
-              <th className='amount-heading'>Amount Paid</th>
-              <th>Date</th>
-              <th>Notes</th>
-              <th>Actions</th>
+              <th className='bought-from'>Bought from</th>
+              <th className='amount amount-heading'>Amount Paid</th>
+              <th className='date'>Date</th>
+              <th className='notes'>Notes</th>
+              <th className='actions'>Actions</th>
             </tr>
           </thead>
           <tbody>
